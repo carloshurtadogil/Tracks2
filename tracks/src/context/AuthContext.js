@@ -1,4 +1,6 @@
+import { AsyncStorage } from 'react-native';
 import createDataContext from './createDataContext';
+import trackerApi from '../api/tracker';
 
 /*
     Class that handles the authentication process for Tracker
@@ -8,20 +10,31 @@ import createDataContext from './createDataContext';
 */
 const authReducer = ( state, action ) => {
     switch ( action.type ) {
+        case 'add_error':
+            return { ...state, errorMessage: action.payload }; // update error message
+        case 'signup': 
+            return { token: action.payload, errorMessage: '' };
         default:
             return state;
     }
 };
 
 //Handle the signup processs
-const signup = ( dispatch ) => {
-    return ({ email, password }) => {
+const signup = ( dispatch ) => async ({ email, password }) => {
+    try {
         //Make api request to sign up with given email and password
-
+        const response = await trackerApi.post( '/signup', { email, password } );
+        
         // if we sign up, modify our state and say that we are authenticated
-
-        // if signing up fails, reflext an error message
-    };
+        await AsyncStorage.setItem( 'token', response.data.token );
+        dispatch({ type: 'signup', payload: response.data.token });
+    } catch ( err ) {
+        // if signing up fails, reflect an error message
+        dispatch({ 
+            type: 'add_error', 
+            payload: 'Uh-oh! It appears that something went wrong. Ensure that you are entering a new email and password.'
+        });
+    }
 };
  
 const signin = ( dispatch ) => {
@@ -40,6 +53,6 @@ const signout = ( dispatch ) => {
 
 export const { Provider, Context } = createDataContext(
     authReducer,
-    { signup, signin, signout },
-    { signedIn: false }
+    { signup, signin, signout }, // Methods available within the context
+    { token: null, errorMessage: '' } // Current state object
 );
