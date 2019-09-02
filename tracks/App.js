@@ -14,6 +14,7 @@ import {
   TrackListScreen
 
  } from './src/screens';
+ import { Provider as AuthProvider } from './src/context/AuthContext';
 
  const switchNavigator = createSwitchNavigator({
    //First flow that handles both the login and the signup processes
@@ -33,4 +34,12 @@ import {
   })
  });
 
- export default createAppContainer(switchNavigator);
+const App = createAppContainer(switchNavigator);
+
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};
