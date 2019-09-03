@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import createDataContext from './createDataContext';
 import trackerApi from '../api/tracker';
+import { navigate } from '../navigationRef';
 
 /*
     Class that handles the authentication process for Tracker
@@ -20,14 +21,17 @@ const authReducer = ( state, action ) => {
 };
 
 //Handle the signup processs
-const signup = ( dispatch ) => async ({ email, password }) => {
+const signup = ( dispatch ) => async ( { email, password }, callback ) => {
     try {
-        //Make api request to sign up with given email and password
+        // Make api request to sign up with given email and password
         const response = await trackerApi.post( '/signup', { email, password } );
         
         // if we sign up, modify our state and say that we are authenticated
         await AsyncStorage.setItem( 'token', response.data.token );
         dispatch({ type: 'signup', payload: response.data.token });
+
+        // navigate to mainFlow
+        navigate('TrackList');
     } catch ( err ) {
         // if signing up fails, reflect an error message
         dispatch({ 

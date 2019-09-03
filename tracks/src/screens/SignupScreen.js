@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements';
 import { Spacer } from '../components';
 import { Context as AuthContext } from '../context/AuthContext';
+import { LinearGradient } from 'expo-linear-gradient';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const SignupScreen = ({ navigation }) => {
-    const { container, errorMessage } = styles;//Destructure styles for convenience
+    const { background, container, errorMessage, title } = styles;//Destructure styles for convenience
     
     //Data held for inputs
     const { state, signup } = useContext( AuthContext ); 
@@ -13,37 +15,56 @@ const SignupScreen = ({ navigation }) => {
     const [ password, setPassword ] = useState('');
 
     return (
-        <View style={ container }>
-            <Spacer/>
-            <Text h3>Sign Up for Tracker</Text>
+        <LinearGradient
+            colors={ [ '#485461', '#28313B'] }
+            style={ background }
+        >
+            <View
+                style={ container }
+            >
+                <MaterialIcons //temporary logo
+                    name="gps-fixed" 
+                    size={128} 
+                    color="#03C8A8"
+                    style={{ alignSelf: 'center' }}
+                />
 
-            <Spacer/>
-            <Input 
-                label="Email"
-                value={ email }
-                onChangeText={ setEmail }
-                autoCapitalize="none"
-                autoCorrect={ false }
-            />
+                <Spacer/>
+                <Text h3 style={ title }>Tracker</Text>
 
-            <Spacer/>
-            <Input 
-                label="Password"
-                value={ password }
-                onChangeText={ setPassword }
-                autoCapitalize="none"
-                autoCorrect={ false }
-                secureTextEntry
-            />
+                <Spacer/>
+                <Input 
+                    label="Email"
+                    value={ email }
+                    onChangeText={ setEmail }
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                />
 
-            { state.errorMessage ? <Text style={ errorMessage }>{ state.errorMessage }</Text> : null }
-            <Spacer/>
-            <Button 
-                title="Signup"
-                onPress={ () => signup({ email, password }) }
-            />
+                <Spacer/>
+                <Input 
+                    label="Password"
+                    value={ password }
+                    onChangeText={ setPassword }
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                    secureTextEntry
+                />
 
-        </View>
+                { state.errorMessage ? <Text style={ errorMessage }>{ state.errorMessage }</Text> : null }
+                <Spacer/>
+                <Button 
+                    title="Signup"
+                    onPress={ () => signup({ email, password }) }
+                />
+
+                <TouchableOpacity
+                    onPress={ () => navigation.navigate('Signin') }
+                >
+                    <Text>Already have an account? Sign in instead</Text>
+                </TouchableOpacity>
+            </View>
+        </LinearGradient>
     );
 };
 
@@ -54,10 +75,13 @@ SignupScreen.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
-        marginBottom: 200,
+        marginBottom: 150,
         marginLeft: 20,
         marginRight: 20
     },
@@ -66,6 +90,11 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         marginTop: 15
+    }, 
+    title: {
+        alignSelf: 'center',
+        color: 'white',
+        fontFamily: 'GillSans-Light'
     }
 });
 
