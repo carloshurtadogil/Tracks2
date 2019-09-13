@@ -7,6 +7,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { 
   AccountScreen,
+  LoadingScreen,
   SigninScreen,
   SignupScreen,
   TrackCreateScreen,
@@ -18,6 +19,7 @@ import {
  import { setNavigator } from './src/navigationRef';
 
  const switchNavigator = createSwitchNavigator({
+   Loading: LoadingScreen, //Screen that resolves authentication issues
    //First flow that handles both the login and the signup processes
   loginFlow: createStackNavigator({
     Signup: SignupScreen,

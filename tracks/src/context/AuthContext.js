@@ -22,6 +22,19 @@ const authReducer = ( state, action ) => {
     }
 };
 
+//Automatically sign in a user if credentials are stored
+const tryLocalSignin = dispatch => async () => {
+    const token = await AsyncStorage.getItem('token');
+
+    if ( token ) {
+        dispatch({ type: 'signin', payload: token });
+        navigate('TrackList');
+    } else {
+        navigate('loginFlow');
+    }
+};
+
+//Clear any and all error messages
 const clearErrorMessage = ( dispatch ) => () => {
     dispatch({ type: 'clear_error_message' });
 };
@@ -47,6 +60,7 @@ const signup = ( dispatch ) => async ( { email, password }, callback ) => {
     }
 };
  
+//Handle the signin process
 const signin = ( dispatch ) => async ({ email, password }) => {
     // try to sign in
     try {
@@ -76,6 +90,6 @@ const signout = ( dispatch ) => {
 
 export const { Provider, Context } = createDataContext(
     authReducer,
-    { signup, signin, signout, clearErrorMessage }, // Methods available within the context
+    { signup, signin, signout, clearErrorMessage, tryLocalSignin }, // Methods available within the context
     { token: null, errorMessage: '' } // Current state object
 );

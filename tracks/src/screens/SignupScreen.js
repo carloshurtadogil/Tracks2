@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import { AuthForm, Spacer } from '../components';
@@ -8,12 +8,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import NavLink from '../components/NavLink';
 
 const SignupScreen = ({ navigation }) => {
-    const { background, container, errorMessage, titleStyle } = styles;//Destructure styles for convenience
+    const { background, container, titleStyle } = styles;//Destructure styles for convenience
     
     //Data held for inputs
     const { state, signup, clearErrorMessage } = useContext( AuthContext ); 
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('');
 
     return (
         <LinearGradient
