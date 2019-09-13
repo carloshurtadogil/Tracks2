@@ -20,7 +20,7 @@ import {
  const switchNavigator = createSwitchNavigator({
    //First flow that handles both the login and the signup processes
   loginFlow: createStackNavigator({
-    SignUp: SignupScreen,
+    Signup: SignupScreen,
     Signin: SigninScreen
   }),
   //After user logins in or signs up, they are taken to this new navigator
