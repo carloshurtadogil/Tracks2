@@ -6,7 +6,7 @@ import {
 } from 'expo-location';
 
 //Check the current permissions of the app to ensure that location may be tracked
-export default (callback, shouldTrack) => {
+export default (shouldTrack, callback) => {
     const [ error, setError ] = useState(null);
     const [ subscriber, setSubcriber ] = useState(null);
 
@@ -22,7 +22,6 @@ export default (callback, shouldTrack) => {
             );
 
             setSubcriber(sub);
-            setError(null);
         } catch (err) {
             setError(err);
         }
