@@ -10,9 +10,7 @@ const AccountScreen = () => {
     const { signout } = useContext(AuthContext);
 
     return (
-        <SafeAreaView forceInset={{ top: 'always' }}>
-            <Text style={{ fontSize: 48 }}>AccountScreen</Text>
-
+        <SafeAreaView>
             <Spacer>
                 <Button 
                     title="Sign Out"
@@ -31,5 +29,19 @@ AccountScreen.navigationOptions = () => {
         tabBarIcon: <FontAwesome name='gear' size={20} />
     };
 };
+
+AccountScreen.navigationOptions = () => {
+    return {
+      title: 'Account Properties',
+      headerStyle: {
+        backgroundColor: '#485461',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 18
+      }
+    };
+  };
 
 export { AccountScreen };

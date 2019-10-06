@@ -21,6 +21,9 @@ import { Provider as TrackProvider } from './src/context/TrackContext';
 import { setNavigator } from './src/navigationRef';
 import { FontAwesome } from '@expo/vector-icons';
 
+//Create Tab Options
+
+//For TrackList View
 const trackListFlow = createStackNavigator({
   TrackList: TrackListScreen,
   TrackDetail: TrackDetailScreen
@@ -33,6 +36,31 @@ trackListFlow.navigationOptions = () => {
   };
 };
 
+//For CreateTrack View
+const trackCreate = createStackNavigator({
+  TrackCreate: TrackCreateScreen
+});
+
+trackCreate.navigationOptions = () => {
+  return {
+      title: 'Create a Track',
+      tabBarIcon: <FontAwesome name='plus' size={20} />
+  };
+};
+
+//For Account View
+const accountManagement = createStackNavigator({
+  Account: AccountScreen
+});
+
+accountManagement.navigationOptions = () => {
+  return {
+    title: 'Account',
+    tabBarIcon: <FontAwesome name='user' size={20} />
+  };
+};
+
+
 const switchNavigator = createSwitchNavigator({
   Loading: LoadingScreen, //Screen that resolves authentication issues
   //First flow that handles both the login and the signup processes
@@ -44,8 +72,8 @@ const switchNavigator = createSwitchNavigator({
   mainFlow: createBottomTabNavigator({
     //Stack navigator to allow users to view the details of the tracks they have recorded.
     trackListFlow,
-    TrackCreate: TrackCreateScreen,
-    Account: AccountScreen
+    trackCreate,
+    accountManagement
   })
 });
 
