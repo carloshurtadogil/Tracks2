@@ -17,7 +17,7 @@ const TrackCreateScreen = ({ isFocused }) => {
     }, [state.recording]);
 
     //Ensures that the application has permission to use the user's current location
-    const [ error ] = useLocation( isFocused, callback );
+    const [ error ] = useLocation( isFocused || state.recording, callback );
 
     return (
         <SafeAreaView forceInset={{ top: 'always' }}>
