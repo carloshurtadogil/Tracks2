@@ -35,7 +35,7 @@ export default (shouldTrack, callback) => {
             subscriber.remove();//stop the watching process entirely
             setSubcriber(null);
         }
-    }, [shouldTrack]);//compare to the last time the hook ran to determine if tracking is allowed
+    }, [shouldTrack, callback]);//compare to the last time the hook ran to determine if tracking is allowed
 
     return [ error ];
 };

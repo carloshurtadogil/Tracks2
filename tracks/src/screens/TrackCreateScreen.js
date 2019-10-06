@@ -1,5 +1,5 @@
 import '../_mockLocation';
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView, withNavigationFocus } from 'react-navigation';
@@ -10,13 +10,14 @@ import TrackForm from '../components/TrackForm';
 
 const TrackCreateScreen = ({ isFocused }) => {
     const { centerItemStyle, errorStyle } = styles;
-
     const { state, addLocation } = useContext(LocationContext);
 
-    //Ensures that the application has permission to use the user's current location
-    const [ error ] = useLocation( isFocused, (location) => {
+    const callback = useCallback((location) => {
         addLocation(location, state.recording);
-    });
+    }, [state.recording]);
+
+    //Ensures that the application has permission to use the user's current location
+    const [ error ] = useLocation( isFocused, callback );
 
     return (
         <SafeAreaView forceInset={{ top: 'always' }}>

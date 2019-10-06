@@ -3,11 +3,13 @@ import { ActivityIndicator, StyleSheet, Text } from 'react-native';
 import MapView, { Circle, Polyline } from 'react-native-maps';
 import { Context as LocationContext } from '../context/LocationContext';
 
+//The map that is to be displayed in TrackCreateScreen
 const Map = () => {
     const { mapStyle } = styles;
 
     const { state: { currentLocation } } = useContext(LocationContext);
 
+    //Shows an activity indicator during loading process
     if ( !currentLocation ) {
         return <ActivityIndicator size="large" style={{ marginTop: 200 }} />
     }
@@ -21,6 +23,7 @@ const Map = () => {
                 longitudeDelta: 0.01
             }}
         >
+            {/**The user's current location shown to the user */}
             <Circle
                 center={ currentLocation.coords }
                 radius={ 30 }
