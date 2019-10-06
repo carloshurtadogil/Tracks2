@@ -10,11 +10,11 @@ import {
   LoadingScreen,
   SigninScreen,
   SignupScreen,
-  TrackCreateScreen,
   TrackDetailScreen,
   TrackListScreen
 
  } from './src/screens';
+ import TrackCreateScreen from './src/screens/TrackCreateScreen';
  import { Provider as AuthProvider } from './src/context/AuthContext';
  import { Provider as LocationProvider } from './src/context/LocationContext';
  import { setNavigator } from './src/navigationRef';
